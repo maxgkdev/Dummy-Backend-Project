@@ -1,0 +1,20 @@
+name: Security-SAST-Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  semgrep:
+    name: Code Security Audit
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Security Audit
+        run: semgrep ci --config=p/csec --config=p/owasp-top-10
