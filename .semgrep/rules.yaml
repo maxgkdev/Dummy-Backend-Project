@@ -1,0 +1,9 @@
+rules:
+  - id: enforce-secure-bounds-checking
+    patterns:
+      - pattern: std::strcpy($BUFF, $SRC)
+    message: "CRITICAL SECURITY FLAW: Banned memory operation detected. 'std::strcpy' does not validate destination buffer boundaries and introduces high risk of Stack-Based Buffer Overflow / Remote Code Execution (RCE). Remediate immediately using 'strncpy' or modern bounded strings."
+    languages:
+      - cpp
+      - c
+    severity: ERROR

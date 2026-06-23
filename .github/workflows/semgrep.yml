@@ -17,5 +17,5 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Security Audit
-        # FIXED: Using auto-configuration to prevent registry 404 errors
-        run: semgrep ci --config auto
+        # FIXED: Instructing the container to run our custom corporate policy directory
+        run: semgrep ci --config=.semgrep/
