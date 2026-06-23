@@ -2,11 +2,18 @@
 #include <cstring>
 
 void process_user_input(char* input) {
-    char secure_buffer[8];
-    // VULNERABILITY: strcpy does not check bounds. 
-    // If input is larger than 8 bytes, it overflows the stack memory.
-    std::strcpy(secure_buffer, input); 
-    std::cout << "Data processed: " << secure_buffer << std::endl;
+    // Allocate fixed buffer space
+    const int BUFFER_SIZE = 8;
+    char secure_buffer[BUFFER_SIZE];
+
+    // REMEDIATION: strncpy requires the destination size limit.
+    // We pass BUFFER_SIZE - 1 to guarantee room for the null-terminator string ending (\0).
+    std::strncpy(secure_buffer, input, BUFFER_SIZE - 1);
+    
+    // Explicitly enforce the null-terminator at the final array index
+    secure_buffer[BUFFER_SIZE - 1] = '\0';
+
+    std::cout << "Data safely processed: " << secure_buffer << std::endl;
 }
 
 int main() {
