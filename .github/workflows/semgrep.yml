@@ -17,4 +17,5 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Security Audit
-        run: semgrep ci --config=p/csec --config=p/owasp-top-10
+        # FIXED: Using auto-configuration to prevent registry 404 errors
+        run: semgrep ci --config auto
